@@ -11,26 +11,26 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     public GameObject QuizPanel;
 
-    private static UIManager uiinstance = null;
+    private static UIManager instance = null;
 
     // Game Instance Singleton
-    public static UIManager UIinstance
+    public static UIManager Instance
     {
         get
         {
-            return uiinstance;
+            return instance;
         }
     }
 
     private void Awake()
     {
         // if the singleton hasn't been initialized yet
-        if (uiinstance != null && uiinstance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
 
-        uiinstance = this;
+        instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
     // Start is called before the first frame update

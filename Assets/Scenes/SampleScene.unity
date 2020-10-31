@@ -672,7 +672,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -306.90002}
+  m_AnchoredPosition: {x: 0, y: -306.8999}
   m_SizeDelta: {x: 0, y: 613.80005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1251239667
@@ -1797,6 +1797,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Startseite: {fileID: 1559697574}
+  Panel: {fileID: 1251239665}
+  QuizPanel: {fileID: 1927315043}
 --- !u!222 &3256542028941982978
 CanvasRenderer:
   m_ObjectHideFlags: 0

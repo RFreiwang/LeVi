@@ -12,7 +12,7 @@ public class loadQuizScript : MonoBehaviour
 
     public void activateQuizpanel(GameObject go)
     {
-        UIManager.UIinstance.LoadQuizPanel(go);
+        UIManager.Instance.LoadQuizPanel(go);
     }
 
     // Update is called once per frame
