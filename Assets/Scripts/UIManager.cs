@@ -5,7 +5,6 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
 
-    GameObject pfb;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +17,16 @@ public class UIManager : MonoBehaviour
         
     }
 
+    public void LoadPrefabScrollable(GameObject gameObject)
+    {
+        Transform Panel = this.transform.GetChild(0);
+        GameObject Artboard = Instantiate(gameObject, Panel.position, Panel.rotation, Panel);
+    }
+
     public void LoadPrefab(GameObject gameObject)
     {
-        Instantiate(pfb);
+        Transform Panel = this.transform.GetChild(0);
+        GameObject Artboard = Instantiate(gameObject, transform.position, transform.rotation, Panel);
     }
 
 }
