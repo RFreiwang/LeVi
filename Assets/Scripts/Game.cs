@@ -2,17 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    takingquiz,
+    inmainmenu
+}
+
+
 public class Game : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private static Game instance = null;
+    public GameState gamestate { get; private set; }
+    public delegate void OnStateChangeHandler();
+    public event OnStateChangeHandler OnStateChange;
+
+ 
+    // Game Instance Singleton
+    public static Game Instance
     {
-        
+        get
+        {
+            return instance;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        // if the singleton hasn't been initialized yet
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
+
+    public void SetGameState(GameState state)
+    {
+        this.gamestate = state;
+        OnStateChange?.Invoke();
+    }
+
+
+
+
+
 }

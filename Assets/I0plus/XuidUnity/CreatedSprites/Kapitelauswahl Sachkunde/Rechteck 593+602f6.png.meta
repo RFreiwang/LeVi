@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3623c2f3ff779f54fbdd6f59bf96100b
+guid: e42872b837e8930479b9924e9ebf4ff0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -46,7 +46,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 3, y: 0, z: 4, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -83,7 +83,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: XuidUnity_Kapitelauswahl Mathematik
+  spritePackingTag: XuidUnity_Kapitelauswahl Sachkunde
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

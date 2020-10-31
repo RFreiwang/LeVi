@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 33ed645d4dfc0244ca3183814c72bdd2
+guid: 37651a82a16928e4f9dd4bc61c07919e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -83,7 +83,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: XuidUnity_Kapitelauswahl Mathematik
+  spritePackingTag: XuidUnity_Kapitelauswahl Sachkunde
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
