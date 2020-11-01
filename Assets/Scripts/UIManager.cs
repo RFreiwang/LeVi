@@ -10,6 +10,10 @@ public class UIManager : MonoBehaviour
     public GameObject Panel;
     [SerializeField]
     public GameObject QuizPanel;
+    [SerializeField]
+    public GameObject WinPanel;
+    [SerializeField]
+    public GameObject LosePanel;
 
     private static UIManager instance = null;
 
@@ -42,7 +46,22 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoBack();
+        }
+    }
+
+    
+
+    public void SetParent(Transform go, Transform goparent)
+    {
+        go.transform.parent = goparent;
+    }
+
+    public void InstantiateGameObject(Transform go, Transform goparent)
+    {
+        Instantiate(go, goparent.position, goparent.rotation, goparent);
     }
 
     public void LoadPrefabScrollable(GameObject gameObject)
@@ -69,6 +88,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void GoBackToMainMenu()
+    {
+        Game.Instance.SetGameState(GameState.inmainmenu);
+    }
+
+    public void GoBack()
+    {
+        int lastChildIndex = QuizPanel.transform.childCount - 1;
+        Debug.Log(lastChildIndex);
+        if(lastChildIndex != 0)
+        {
+            QuizPanel.transform.GetChild(lastChildIndex).gameObject.SetActive(false);
+        }
+    }
+
     public void LoadQuizPanel(GameObject gameObject)
     {
         Game.Instance.SetGameState(GameState.takingquiz);
@@ -76,4 +110,8 @@ public class UIManager : MonoBehaviour
         GameObject Artboard = Instantiate(gameObject, transform.position, transform.rotation, QuizPanel.transform);
     }
 
+    public void ClickNext()
+    {
+        QuizManager.Instance.NextQuestion();
+    }
 }

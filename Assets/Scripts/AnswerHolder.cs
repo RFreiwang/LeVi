@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class AnswerHolder : MonoBehaviour
 {
-    public delegate void AnswerEvent(string ans);
-    public event AnswerEvent answerEv;
-    public int a = 2;
+    [SerializeField]
+    private bool answer;
 
-    public void Answer(string answer)
+    public void Answer()
     {
-        answerEv?.Invoke(answer);
+        QuizManager.Instance.IsItTrue(answer);
     }
+
+    public void AbortQuiz()
+    {
+        UIManager.Instance.GoBackToMainMenu();
+    }
+
 
     // Start is called before the first frame update
     void Start()

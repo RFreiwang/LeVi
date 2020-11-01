@@ -12,6 +12,7 @@ public class loadQuizScript : MonoBehaviour
 
     public void activateQuizpanel(GameObject go)
     {
+        go.tag = "Kapitel";
         UIManager.Instance.LoadQuizPanel(go);
     }
 

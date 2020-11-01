@@ -383,8 +383,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3092640738080739449}
-        m_MethodName: starteQuiz
+      - m_Target: {fileID: 6183776388334787046}
+        m_MethodName: StartQuiz
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1321,10 +1321,10 @@ GameObject:
   - component: {fileID: 3669429128184490605}
   - component: {fileID: 2713936334897140037}
   - component: {fileID: 7052355167351950076}
-  - component: {fileID: 3092640738080739449}
+  - component: {fileID: 6183776388334787046}
   m_Layer: 5
-  m_Name: Video-Auswahl 1 bis 10
-  m_TagString: Untagged
+  m_Name: QuizMathe1
+  m_TagString: Kapitel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1407,7 +1407,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3092640738080739449
+--- !u!114 &6183776388334787046
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1416,8 +1416,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8094110740620707084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb29aeb760141034b99c611da48401cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 43cd11d726fdffb4682753fc41ca4536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MyName: 
   FragenArray:
   - {fileID: 2996835818153836306, guid: ee414934c0de79f46a23c461d37d4141, type: 3}
+  - {fileID: 3657173276869037906, guid: a68729473e92e1a4f90b8c175087e71e, type: 3}
+  - {fileID: 1372372953582442106, guid: 848f8d932e6ccf145a87651713d42fea, type: 3}
+  - {fileID: 9200786724542364210, guid: 5da893d586df9234285d6323591ba093, type: 3}
+  - {fileID: 4526080311308396447, guid: 79ae1786df322d74484e8efce411c8dc, type: 3}
+  - {fileID: 4595377977199980687, guid: 27b7f96b990bb6748ad725f3eea724ed, type: 3}
+  - {fileID: 7821557117399548660, guid: 96209961cac0d4343928f0b4464fab41, type: 3}
+  - {fileID: 8830894232643203349, guid: f9ec8e7daf49ff94ebd973378c9462b9, type: 3}
+  - {fileID: 1385686319109356816, guid: 2a970edc02ed1eb4a8f2f8df8b7c7ca9, type: 3}
+  - {fileID: 5662521791476060980, guid: dd918fc10df0a8c4ab8901a2a9b70103, type: 3}
