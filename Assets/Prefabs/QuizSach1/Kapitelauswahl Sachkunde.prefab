@@ -1756,6 +1756,7 @@ GameObject:
   - component: {fileID: 8782952773568039686}
   - component: {fileID: 2210932676477401662}
   - component: {fileID: 5266000739411216397}
+  - component: {fileID: 6622654907321981728}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -1862,7 +1863,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2210932676477401662}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6622654907321981728}
+        m_MethodName: activateQuizpanel
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8094110740620707084, guid: 89a99a7fda958074eb48591d0dedc05c,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6622654907321981728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145818670609278291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea5950a6ff24bf418234638cdcce729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8403075789120038551
 GameObject:
   m_ObjectHideFlags: 0
