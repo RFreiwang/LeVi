@@ -8,8 +8,12 @@ public class QuizManager : MonoBehaviour
 {
     [SerializeField]
     Quiz[] QuizArray;
+
+    [SerializeField]
+    GameObject GamePanel;
+
     Queue<GameObject> Fragen;
-    static Quiz currentQuiz = null;
+    public static Quiz currentQuiz = null;
     static GameObject currentQuestion = null;
     private static int localPoints;
     private static QuizManager instance = null;
@@ -44,12 +48,19 @@ public class QuizManager : MonoBehaviour
 
     public void IsItTrue(bool answer)
     {
-        if (answer)
+        if (answer || Game.Instance.cheat)
         {
             Debug.Log("Question was answered");
             localPoints++;
-            UIManager.Instance.WinPanel.SetActive(true);
-            UIManager.Instance.WinPanel.transform.SetAsLastSibling();
+            if(Fragen.Count > 0)
+            {
+                UIManager.Instance.WinPanel.SetActive(true);
+                UIManager.Instance.WinPanel.transform.SetAsLastSibling();
+            }
+            else
+            {
+                AllQuestionFinished?.Invoke();
+            }
 
         }
         else
@@ -77,22 +88,21 @@ public class QuizManager : MonoBehaviour
             Debug.Log(go);
             if (go != null)
             {
-                currentQuestion = Instantiate(go, transform.position, transform.rotation, this.transform);
+                currentQuestion = (GameObject)Instantiate(go, currentQuiz.transform.position, currentQuiz.transform.rotation, currentQuiz.transform) as GameObject;
                 ans = currentQuestion.GetComponent<AnswerHolder>();
-
             }
         }
-       
+
        
 
         else
         {
-            Debug.Log("All Questions were correctly answered");
-            Debug.Log(GameObject.FindGameObjectWithTag("Kapitel"));
-            Destroy(GameObject.FindGameObjectWithTag("Kapitel"));
-            Destroy(currentQuiz.gameObject);
-            Game.Instance.SetGameState(GameState.inmainmenu);
-            AllQuestionFinished?.Invoke();
+            //Debug.Log("All Questions were correctly answered");
+            //Debug.Log(GameObject.FindGameObjectWithTag("Kapitel"));
+            //Destroy(GameObject.FindGameObjectWithTag("Kapitel"));
+            //Destroy(currentQuiz.gameObject);
+            //Game.Instance.SetGameState(GameState.inmainmenu);
+
         }
 
     }
@@ -110,11 +120,20 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    public void ShutDownQuiz()
+    {
+        if(currentQuiz != null)
+        {
+            Destroy(currentQuiz.gameObject);
+        }
+        Game.Instance.SetGameState(GameState.inmainmenu);
+    }
+
     public void StartQuiz(Quiz quiz, GameObject[] fragen)
     {
         EnqueueQuestions(fragen);
         GameObject go = Fragen.Dequeue();
-        currentQuestion = (GameObject) Instantiate(go, transform.position, transform.rotation, quiz.transform) as GameObject;
+        currentQuestion = (GameObject) Instantiate(go, quiz.transform.position, quiz.transform.rotation, quiz.transform) as GameObject;
         currentQuiz = quiz;
         AnswerHolder ans = currentQuestion.GetComponent<AnswerHolder>();
     }

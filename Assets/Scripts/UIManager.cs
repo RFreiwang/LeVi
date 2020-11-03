@@ -14,6 +14,14 @@ public class UIManager : MonoBehaviour
     public GameObject WinPanel;
     [SerializeField]
     public GameObject LosePanel;
+    [SerializeField]
+    public GameObject GamePanel;
+    [SerializeField]
+    GameObject KapitelAbgeschlossenPanel;
+    [SerializeField]
+    GameObject AreYouSure;
+    [SerializeField]
+    GameObject FailNavBar;
 
     private static UIManager instance = null;
 
@@ -46,10 +54,10 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GoBack();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    GoBack();
+        //}
     }
 
     
@@ -68,50 +76,110 @@ public class UIManager : MonoBehaviour
     {
         Transform Panel = this.transform.GetChild(0);
         GameObject Artboard = Instantiate(gameObject, Panel.position, Panel.rotation, Startseite.transform);
+        FailNavBar.SetActive(true);
+        FailNavBar.transform.SetAsLastSibling();
     }
 
     public void SwitchPanelAndScroll()
     {
-        Transform Panel = this.transform.GetChild(0);
+      //  Transform Panel = this.transform.GetChild(0);
         Transform Quizpanel = Panel.transform.Find("Quizpanel");
 
-        this.GetComponent<UnityEngine.UI.ScrollRect>().enabled = false;
+        this.GetComponent<UnityEngine.UI.ScrollRect>().normalizedPosition = new Vector2(0, 1);
         if (Game.Instance.gamestate == GameState.inmainmenu)
         {
-            this.GetComponent<UnityEngine.UI.ScrollRect>().enabled = true;
+            Startseite.SetActive(true);
+            this.GetComponent<UnityEngine.UI.ScrollRect>().content = Panel.GetComponent<RectTransform>();
             Quizpanel.gameObject.SetActive(false);
         }
         if (Game.Instance.gamestate == GameState.takingquiz)
         {
-            this.GetComponent<UnityEngine.UI.ScrollRect>().enabled = false;
+            Startseite.SetActive(false);
+            this.GetComponent<UnityEngine.UI.ScrollRect>().content = QuizPanel.GetComponent<RectTransform>();
             Quizpanel.gameObject.SetActive(true);
         }
     }
 
     public void GoBackToMainMenu()
     {
+        Quiz quiz = QuizManager.currentQuiz;
+        if(quiz == null)
+        {
+            TryMainMenu();
+        }
+        else
+        {
+            AreYouSure.SetActive(true);
+        }
+    }
+
+    public void TryMainMenu()
+    {
+        if(QuizManager.Instance != null)
+        {
+            QuizManager.Instance.ShutDownQuiz();
+        }
+        GameObject kapP;
+        GameObject quizP;
+        if (kapP = GameObject.FindGameObjectWithTag("Kapitel"))
+        {
+            Destroy(kapP);
+        }
+        if (quizP = GameObject.FindGameObjectWithTag("Quiz"))
+        {
+            Destroy(quizP);
+        }
+        FailNavBar.SetActive(false);
         Game.Instance.SetGameState(GameState.inmainmenu);
     }
 
-    public void GoBack()
+    public void ForceGoBackToMainMenu()
     {
-        int lastChildIndex = QuizPanel.transform.childCount - 1;
-        Debug.Log(lastChildIndex);
-        if(lastChildIndex != 0)
-        {
-            QuizPanel.transform.GetChild(lastChildIndex).gameObject.SetActive(false);
-        }
+        TryMainMenu();
+        AreYouSure.SetActive(false);
+    }
+
+    public void GoBack(GameObject go)
+    {
+        go.SetActive(false);
+        //int lastChildIndex = QuizPanel.transform.childCount - 1;
+        //Debug.Log(lastChildIndex);
+        //if(lastChildIndex != 0)
+        //{
+        //    QuizPanel.transform.GetChild(lastChildIndex).gameObject.SetActive(false);
+        //}
     }
 
     public void LoadQuizPanel(GameObject gameObject)
     {
         Game.Instance.SetGameState(GameState.takingquiz);
-        
-        GameObject Artboard = Instantiate(gameObject, transform.position, transform.rotation, QuizPanel.transform);
+        GameObject Artboard = Instantiate(gameObject, GamePanel.transform);
+        QuizManager.Instance.AllQuestionFinished += ShowKapitelAbgeschlossen;
     }
 
     public void ClickNext()
     {
         QuizManager.Instance.NextQuestion();
+    }
+
+    public void ShowKapitelAbgeschlossen()
+    {
+        KapitelAbgeschlossenPanel.SetActive(true);
+    }
+
+    public void FinishChapter()
+    {
+        KapitelAbgeschlossenPanel.SetActive(false);
+        Debug.Log(GameObject.FindGameObjectWithTag("Kapitel"));
+        FailNavBar.SetActive(false);
+        QuizManager.Instance.ShutDownQuiz();
+        Destroy(GameObject.FindGameObjectWithTag("Kapitel"));
+        Destroy(GameObject.FindGameObjectWithTag("Quiz"));
+    }
+
+
+    public void ShowPanel(bool show, GameObject gameObject)
+    {
+        gameObject.SetActive(show);
     }
 }

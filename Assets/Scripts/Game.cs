@@ -11,10 +11,13 @@ public enum GameState
 
 public class Game : MonoBehaviour
 {
+    [SerializeField]
+    public bool cheat;
     private static Game instance = null;
     public GameState gamestate { get; private set; }
     public delegate void OnStateChangeHandler();
     public event OnStateChangeHandler OnStateChange;
+    private QuizManager quizManager;
 
  
     // Game Instance Singleton
@@ -36,6 +39,7 @@ public class Game : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
+        quizManager = QuizManager.Instance;
     }
 
     public void SetGameState(GameState state)
