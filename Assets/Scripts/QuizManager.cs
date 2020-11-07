@@ -68,10 +68,11 @@ public class QuizManager : MonoBehaviour
         if (answer || Game.Instance.cheat)
         {
             Debug.Log("Question was answered");
-            localPoints++;
+            
             if(Fragen.Count > 0)
             {
                 UIManager.Instance.WinPanel.SetActive(true);
+                UIManager.Instance.TweenLoseAndWinPanel(UIManager.Instance.WinPanel);
                 UIManager.Instance.WinPanel.transform.SetAsLastSibling();
             }
             else
@@ -101,6 +102,7 @@ public class QuizManager : MonoBehaviour
         {
             Debug.Log("Answer is wrong");
             UIManager.Instance.LosePanel.SetActive(true);
+            UIManager.Instance.TweenLoseAndWinPanel(UIManager.Instance.LosePanel);
             UIManager.Instance.LosePanel.transform.SetAsLastSibling();
 
         }
@@ -108,11 +110,13 @@ public class QuizManager : MonoBehaviour
 
     public void NextQuestion()
     {
+        localPoints++;
         Debug.Log("next q");
         AnswerHolder ans = currentQuestion.GetComponent<AnswerHolder>();
         Transform Kapitelauswahl = currentQuestion.transform.parent;
         Destroy(currentQuestion.transform.gameObject);
-        UIManager.Instance.WinPanel.SetActive(false);
+        UIManager.Instance.CloseLoseAndWinPanel(UIManager.Instance.WinPanel);
+      
 
         Debug.Log(Fragen.Count);
         if(Fragen.Count > 0)

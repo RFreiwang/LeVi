@@ -218,6 +218,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void TweenLoseAndWinPanel(GameObject go)
+    {
+        go.transform.localScale = new Vector3(1, 1, 1);
+        go.transform.DOScale(0, 0.1f).From().SetEase(Ease.InOutQuad);
+    }
+
+    public void CloseLoseAndWinPanel(GameObject go)
+    {
+        go.transform.DOScale(0, 0.1f).SetEase(Ease.InOutQuad).OnComplete(() => { go.SetActive(false); });
+    }
 
     public void SwitchPanelAndScroll()
     {
@@ -249,6 +259,7 @@ public class UIManager : MonoBehaviour
         else
         {
             AreYouSure.SetActive(true);
+            TweenLoseAndWinPanel(AreYouSure);
         }
     }
 
@@ -282,7 +293,7 @@ public class UIManager : MonoBehaviour
 
     public void GoBack(GameObject go)
     {
-        go.SetActive(false);
+        CloseLoseAndWinPanel(go);
         //int lastChildIndex = QuizPanel.transform.childCount - 1;
         //Debug.Log(lastChildIndex);
         //if(lastChildIndex != 0)
@@ -297,7 +308,7 @@ public class UIManager : MonoBehaviour
         GameObject artboard = Instantiate(QuizManager.Instance.QuizArray[index].gameObject, GamePanel.transform);
         QuizManager.Instance.currentQuiz = artboard.GetComponent<Quiz>();
         QuizManager.Instance.AllQuestionFinished += ShowKapitelAbgeschlossen;
-        //StartCoroutine(TweenAllChildren(artboard.transform, 1f, 0.2f, Ease.OutBounce));
+        StartCoroutine(TweenAllChildren(artboard.transform, 0.2f, 0.2f, Ease.InOutQuad));
     }
 
 
@@ -309,6 +320,7 @@ public class UIManager : MonoBehaviour
     public void ShowKapitelAbgeschlossen()
     {
         KapitelAbgeschlossenPanel.SetActive(true);
+        TweenLoseAndWinPanel(KapitelAbgeschlossenPanel);
     }
 
     public void FinishChapter()
