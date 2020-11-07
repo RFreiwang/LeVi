@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Quiz : MonoBehaviour
 {
     [SerializeField]
-    string MyName;
+    public string MyName;
     [SerializeField]
     GameObject[] FragenArray;
-    bool isFinished;
+    [SerializeField]
+    public bool isFinished;
 
-    public void GetAnswer()
-    {
-
-    }
+    public int quizIndex;
 
     public void StartQuiz()
     {
-        QuizManager.Instance.StartQuiz(this, FragenArray);
+        QuizManager.Instance.StartQuiz(FragenArray);
     }
 }

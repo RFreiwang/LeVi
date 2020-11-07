@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [SerializeField]
 public class QuizManager : MonoBehaviour
 {
     [SerializeField]
-    Quiz[] QuizArray;
+    public Quiz[] QuizArray;
+
 
     [SerializeField]
     GameObject GamePanel;
 
+    [SerializeField]
+    Slider slider;
+
     Queue<GameObject> Fragen;
-    public static Quiz currentQuiz = null;
+    public Quiz currentQuiz = null;
     static GameObject currentQuestion = null;
     private static int localPoints;
     private static QuizManager instance = null;
@@ -35,19 +40,26 @@ public class QuizManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
 
-        currentQuestion = new GameObject();
-        currentQuiz = new Quiz();
     }
 
+    private void Start()
+    {
+        for(int i = 0; i < QuizArray.Length; i++)
+        {
+            QuizArray[i].quizIndex = i;
+        }
+    }
 
+    private void updateLocalSlider()
+    {
+        UIManager.Instance.TweenProgressSlider(localPoints, slider);
+    }
 
     public void IsItTrue(bool answer)
     {
+        AudioManager.Instance.Stop();
         if (answer || Game.Instance.cheat)
         {
             Debug.Log("Question was answered");
@@ -68,7 +80,6 @@ public class QuizManager : MonoBehaviour
             Debug.Log("Answer is wrong");
             UIManager.Instance.LosePanel.SetActive(true);
             UIManager.Instance.LosePanel.transform.SetAsLastSibling();
-            //TODO implement Lose Screen
 
         }
     }
@@ -88,7 +99,8 @@ public class QuizManager : MonoBehaviour
             Debug.Log(go);
             if (go != null)
             {
-                currentQuestion = (GameObject)Instantiate(go, currentQuiz.transform.position, currentQuiz.transform.rotation, currentQuiz.transform) as GameObject;
+                currentQuestion = Instantiate(go, currentQuiz.transform.position, currentQuiz.transform.rotation, currentQuiz.transform);
+                updateLocalSlider();
                 ans = currentQuestion.GetComponent<AnswerHolder>();
             }
         }
@@ -122,6 +134,8 @@ public class QuizManager : MonoBehaviour
 
     public void ShutDownQuiz()
     {
+        localPoints = 0;
+        updateLocalSlider();
         if(currentQuiz != null)
         {
             Destroy(currentQuiz.gameObject);
@@ -129,12 +143,11 @@ public class QuizManager : MonoBehaviour
         Game.Instance.SetGameState(GameState.inmainmenu);
     }
 
-    public void StartQuiz(Quiz quiz, GameObject[] fragen)
+    public void StartQuiz(GameObject[] fragen)
     {
         EnqueueQuestions(fragen);
         GameObject go = Fragen.Dequeue();
-        currentQuestion = (GameObject) Instantiate(go, quiz.transform.position, quiz.transform.rotation, quiz.transform) as GameObject;
-        currentQuiz = quiz;
+        currentQuestion = Instantiate(go, currentQuiz.transform.position, currentQuiz.transform.rotation, currentQuiz.transform);
         AnswerHolder ans = currentQuestion.GetComponent<AnswerHolder>();
     }
 }

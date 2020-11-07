@@ -10,10 +10,10 @@ public class loadQuizScript : MonoBehaviour
         
     }
 
-    public void activateQuizpanel(GameObject go)
+    public void activateQuizpanel(int index)
     {
-        go.tag = "Kapitel";
-        UIManager.Instance.LoadQuizPanel(go);
+        //go.tag = "Kapitel";
+        UIManager.Instance.LoadQuizPanel(index);
     }
 
     // Update is called once per frame
