@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     Text punkte;
     [SerializeField]
+    GameObject StartNav;
+    [SerializeField]
     Image upperImage;
     [SerializeField]
     Image lowerImage;
@@ -56,8 +58,10 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        instance = this;
+        else
+        {
+            instance = this;
+        }
 
         buttons = gameObject.GetComponentsInChildren<Button>();
 
@@ -85,6 +89,8 @@ public class UIManager : MonoBehaviour
         tweenImageLeft(upperImage);
         tweenImageLeft(lowerImage);
         StartCoroutine(tweenStartButtons(buttons));
+
+        
         yield return null;
     }
 
@@ -127,16 +133,16 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    GoBack();
-        //}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoBackToMainMenu();
+        }
     }
-
 
 
     private void tweenImageLeft(Image img)
     {
+        img.fillAmount = 0;
         img.DOFillAmount(1f, 1.5f).SetDelay(0.5f).SetEase(Ease.InOutQuad);
     }
 
@@ -151,24 +157,57 @@ public class UIManager : MonoBehaviour
         Instantiate(go, goparent.position, goparent.rotation, goparent);
     }
 
+
+
     public void LoadPrefabScrollable(GameObject gameObject)
     {
+        Game.Instance.Load();
         Transform Panel = this.transform.GetChild(0);
+        loadQuizScript[] quizarray = gameObject.GetComponentsInChildren<loadQuizScript>();
+        StartNav.SetActive(false);
+        if (gameObject.name == "Kapitelauswahl Mathematik")
+        {
+            for (int i = 0; i < quizarray.Length; i++)
+            {
+                Quiz quiz = QuizManager.Instance.QuizArray[i].GetComponent<Quiz>();
+                if (quiz.isFinished)
+                {
+                    quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(true);
+                }
+                else
+                {
+                    quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+                }
+            }
+        }
+
+        if (gameObject.name == "Kapitelauswahl Sachkunde")
+        {
+            for (int i = 0; i < quizarray.Length; i++)
+            {
+                Quiz quiz = QuizManager.Instance.QuizArray[i+4].GetComponent<Quiz>();
+                if (quiz.isFinished)
+                {
+                    quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(true);
+                }
+                else
+                {
+                    quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+                }
+            }
+        }
+
         GameObject artboard = Instantiate(gameObject, Panel.position, Panel.rotation, Startseite.transform);
         FailNavBar.SetActive(true);
         FailNavBar.transform.SetAsLastSibling();
-        loadQuizScript[] quizarray = gameObject.GetComponentsInChildren<loadQuizScript>();
-       
-        //for(int i= 0; i < quizarray.Length; i++)
-        //{
-        //    if (QuizManager.Instance.QuizArray[i].GetComponent<Quiz>().isFinished)
-        //    {
-        //        quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = correct;
-        //    }
-        //}
 
 
         StartCoroutine(TweenAllChildren(artboard.transform, 1f, 0.2f, Ease.OutBack));
+    }
+
+    public void ResetSaveButton()
+    {
+        Game.Instance.ResetSaveData();
     }
 
     public void SetToDone(Quiz[] quizArray)
@@ -229,8 +268,10 @@ public class UIManager : MonoBehaviour
         {
             Destroy(quizP);
         }
+        StartNav.SetActive(true);
         FailNavBar.SetActive(false);
         Game.Instance.SetGameState(GameState.inmainmenu);
+        StartCoroutine(startSzene());
     }
 
     public void ForceGoBackToMainMenu()
@@ -256,7 +297,7 @@ public class UIManager : MonoBehaviour
         GameObject artboard = Instantiate(QuizManager.Instance.QuizArray[index].gameObject, GamePanel.transform);
         QuizManager.Instance.currentQuiz = artboard.GetComponent<Quiz>();
         QuizManager.Instance.AllQuestionFinished += ShowKapitelAbgeschlossen;
-        StartCoroutine(TweenAllChildren(artboard.transform, 1f, 0.2f, Ease.OutBounce));
+        //StartCoroutine(TweenAllChildren(artboard.transform, 1f, 0.2f, Ease.OutBounce));
     }
 
 
@@ -272,14 +313,15 @@ public class UIManager : MonoBehaviour
 
     public void FinishChapter()
     {
-        QuizManager.Instance.currentQuiz.isFinished = true;
         KapitelAbgeschlossenPanel.SetActive(false);
         Debug.Log(GameObject.FindGameObjectWithTag("Kapitel"));
         FailNavBar.SetActive(false);
         QuizManager.Instance.ShutDownQuiz();
         Destroy(GameObject.FindGameObjectWithTag("Kapitel"));
         Destroy(GameObject.FindGameObjectWithTag("Quiz"));
-
+        StartNav.SetActive(true);
+        StartCoroutine(startSzene());
+        Game.Instance.Save();
     }
 
 

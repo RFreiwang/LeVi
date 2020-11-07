@@ -931,3 +931,6 @@ MonoBehaviour:
   - {fileID: 8830894232643203349, guid: f9ec8e7daf49ff94ebd973378c9462b9, type: 3}
   - {fileID: 1385686319109356816, guid: 2a970edc02ed1eb4a8f2f8df8b7c7ca9, type: 3}
   - {fileID: 5662521791476060980, guid: dd918fc10df0a8c4ab8901a2a9b70103, type: 3}
+  isFinished: 0
+  quizIndex: 0
+  Fach: 1

@@ -206,6 +206,9 @@ MonoBehaviour:
   - {fileID: 4805616255200480135, guid: 956f643dc1a6fa946b2e95ef5884cab8, type: 3}
   - {fileID: 4805616255200480135, guid: a9e4a9c48574ea64eb5736e84129a015, type: 3}
   - {fileID: 4805616255200480135, guid: 894a25d7a148a37429194f03d85ee9c5, type: 3}
+  isFinished: 0
+  quizIndex: 0
+  Fach: 1
 --- !u!1 &5553597800375232865
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ public class Quiz : MonoBehaviour
 
     public int quizIndex;
 
+    public Fächer Fach;
+
     public void StartQuiz()
     {
         QuizManager.Instance.StartQuiz(FragenArray);

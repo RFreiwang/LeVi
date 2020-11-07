@@ -366,7 +366,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &89970373
 GameObject:
@@ -796,7 +796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d0fcab416ba2f44a411ca7e61de723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cheat: 0
+  finished: 0000000000000000
+  cheat: 1
 --- !u!4 &272946682
 Transform:
   m_ObjectHideFlags: 0
@@ -809,7 +810,62 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &287579262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 287579264}
+  - component: {fileID: 287579263}
+  m_Layer: 0
+  m_Name: QuizManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &287579263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287579262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb29aeb760141034b99c611da48401cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QuizArray:
+  - {fileID: 6183776388334787046, guid: 0617b22d36ded324a8b36303ec8db68d, type: 3}
+  - {fileID: 1212414171683026784, guid: e8f2b8dea0402c14889322048e3e6511, type: 3}
+  - {fileID: 1212414171683026784, guid: 4687498be4ee3bb43abc826766b87d6e, type: 3}
+  - {fileID: 1212414171683026784, guid: 9a6cc2c38cd65a14e87bfadf3873228e, type: 3}
+  - {fileID: 6183776388334787046, guid: 18e1ac8b531d04c4baa74250b34b1185, type: 3}
+  - {fileID: 6183776388334787046, guid: 89a99a7fda958074eb48591d0dedc05c, type: 3}
+  - {fileID: 6183776388334787046, guid: 97637516be3a6e24b86a96cadf07cfc1, type: 3}
+  - {fileID: 6183776388334787046, guid: a5d4f01545f7d6e4e8c8dea986232103, type: 3}
+  GamePanel: {fileID: 718373177}
+  slider: {fileID: 530795160}
+  currentQuiz: {fileID: 0}
+--- !u!4 &287579264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287579262}
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &340467566
 MonoBehaviour:
@@ -1340,7 +1396,7 @@ RectTransform:
   m_Children:
   - {fileID: 5269548731072617816}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1515,7 +1571,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &707977550
 GameObject:
@@ -1900,7 +1956,7 @@ Transform:
   m_Children:
   - {fileID: 42818977}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &993459852
 GameObject:
@@ -2561,10 +2617,10 @@ RectTransform:
   m_Father: {fileID: 566534347}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -231.40302}
-  m_SizeDelta: {x: 1080, y: 200}
+  m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1529352393
 MonoBehaviour:
@@ -2898,8 +2954,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -247, y: -192.59998}
-  m_SizeDelta: {x: 138.67737, y: 141.7113}
+  m_AnchoredPosition: {x: -247, y: -193}
+  m_SizeDelta: {x: 148.80368, y: 152.05914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1812719688
 MonoBehaviour:
@@ -2962,7 +3018,6 @@ GameObject:
   - component: {fileID: 1927315044}
   - component: {fileID: 1927315046}
   - component: {fileID: 1927315045}
-  - component: {fileID: 1927315047}
   m_Layer: 5
   m_Name: Quizpanel
   m_TagString: Untagged
@@ -3033,30 +3088,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927315043}
   m_CullTransparentMesh: 0
---- !u!114 &1927315047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927315043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb29aeb760141034b99c611da48401cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  QuizArray:
-  - {fileID: 6183776388334787046, guid: 0617b22d36ded324a8b36303ec8db68d, type: 3}
-  - {fileID: 1212414171683026784, guid: e8f2b8dea0402c14889322048e3e6511, type: 3}
-  - {fileID: 1212414171683026784, guid: 4687498be4ee3bb43abc826766b87d6e, type: 3}
-  - {fileID: 1212414171683026784, guid: 9a6cc2c38cd65a14e87bfadf3873228e, type: 3}
-  - {fileID: 6183776388334787046, guid: 18e1ac8b531d04c4baa74250b34b1185, type: 3}
-  - {fileID: 6183776388334787046, guid: 89a99a7fda958074eb48591d0dedc05c, type: 3}
-  - {fileID: 6183776388334787046, guid: 97637516be3a6e24b86a96cadf07cfc1, type: 3}
-  - {fileID: 6183776388334787046, guid: a5d4f01545f7d6e4e8c8dea986232103, type: 3}
-  GamePanel: {fileID: 718373177}
-  slider: {fileID: 530795160}
-  currentQuiz: {fileID: 0}
 --- !u!1 &1936705790
 GameObject:
   m_ObjectHideFlags: 0
@@ -5208,10 +5239,11 @@ MonoBehaviour:
   AreYouSure: {fileID: 5936802453384113394}
   FailNavBar: {fileID: 566534344}
   punkte: {fileID: 3462208282810094459}
+  StartNav: {fileID: 1422088068}
   upperImage: {fileID: 6940771408007597848}
   lowerImage: {fileID: 8243513842560653792}
   Eule: {fileID: 7749216036733207494}
-  correct: {fileID: 21300000, guid: 4d418c62aa8145a419b12753147a2bd1, type: 3}
+  correct: {fileID: 21300000, guid: 6c6bd07777f1d29439a2475e7ff5aefb, type: 3}
 --- !u!1 &3184633675223075573
 GameObject:
   m_ObjectHideFlags: 0
@@ -6899,6 +6931,7 @@ GameObject:
   - component: {fileID: 7443642098228733797}
   - component: {fileID: 1996953621926849898}
   - component: {fileID: 4974674508247921441}
+  - component: {fileID: 6552359923598814301}
   m_Layer: 5
   m_Name: "Experimental Pop \nMusic Session"
   m_TagString: Untagged
@@ -6906,6 +6939,60 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6552359923598814301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6552359923598814300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 4974674508247921441}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3174826764099457764}
+        m_MethodName: ResetSaveButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &6561118821866568449
 RectTransform:
   m_ObjectHideFlags: 0

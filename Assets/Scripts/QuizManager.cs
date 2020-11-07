@@ -40,7 +40,10 @@ public class QuizManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        instance = this;
+        else
+        {
+            instance = this;
+        }
 
     }
 
@@ -50,6 +53,8 @@ public class QuizManager : MonoBehaviour
         {
             QuizArray[i].quizIndex = i;
         }
+
+        
     }
 
     private void updateLocalSlider()
@@ -71,6 +76,23 @@ public class QuizManager : MonoBehaviour
             }
             else
             {
+
+                Game.Instance.SetFinished(currentQuiz.quizIndex, true);
+                if (currentQuiz.Fach == Fächer.Mathe)
+                {
+                    if (!currentQuiz.isFinished)
+                    {
+                        Game.Instance.IncrementMathPoints();
+                    }
+                }
+                else if (QuizManager.Instance.currentQuiz.Fach == Fächer.Sachkunde)
+                {
+                    if (!currentQuiz.isFinished)
+                    {
+                        Game.Instance.IncrementSachPoints();
+                    }
+                }
+                currentQuiz.isFinished = true;
                 AllQuestionFinished?.Invoke();
             }
 
@@ -150,4 +172,11 @@ public class QuizManager : MonoBehaviour
         currentQuestion = Instantiate(go, currentQuiz.transform.position, currentQuiz.transform.rotation, currentQuiz.transform);
         AnswerHolder ans = currentQuestion.GetComponent<AnswerHolder>();
     }
+}
+
+
+public enum Fächer
+{
+    Sachkunde,
+    Mathe
 }
