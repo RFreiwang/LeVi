@@ -6,7 +6,8 @@ using UnityEngine;
 public enum GameState
 {
     takingquiz,
-    inmainmenu
+    inmainmenu,
+    achievement
 }
 
 

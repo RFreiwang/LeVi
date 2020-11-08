@@ -36,6 +36,18 @@ public class UIManager : MonoBehaviour
     GameObject Eule;
     [SerializeField]
     Sprite correct;
+    [SerializeField]
+    GameObject erfolge;
+    [SerializeField]
+    Slider matheSlider;
+    [SerializeField]
+    Slider sachkSlider;
+    [SerializeField]
+    Text matheText;
+    [SerializeField]
+    Text sachkText;
+
+    Tween childTween;
 
     private Button[] buttons;
     private static UIManager instance = null;
@@ -112,11 +124,35 @@ public class UIManager : MonoBehaviour
         }
         foreach (Transform child in go)
         {
-            Tween childTween = child.gameObject.transform.DOLocalMoveY(child.transform.localPosition.y + 1000, duration).SetEase(easeType);
+            childTween = child.gameObject.transform.DOLocalMoveY(child.transform.localPosition.y + 1000, duration).SetEase(easeType);
             yield return new WaitForSeconds(waitTime);
         }
     }
     
+    public IEnumerator TweenErfolge()
+    {
+        matheSlider.value = 0;
+        sachkSlider.value = 0;
+        matheText.text = "0";
+        sachkText.text = "0";
+        int mathPoints = Game.Instance.GetMathPoints();
+        int sachPoints = Game.Instance.GetSachPoints();
+        float math = Mathf.Clamp01((float)mathPoints/4f);
+        float sach = Mathf.Clamp01((float)sachPoints/4f);
+        sachkText.text = sachPoints.ToString();
+        matheText.text = mathPoints.ToString();
+
+        while (childTween.IsActive())
+        {
+            yield return 0;
+        }
+
+    
+        Tween mathTween = matheSlider.DOValue(math, 0.5f).SetEase(Ease.OutCirc).OnComplete(() => { 
+            Tween sachTween = sachkSlider.DOValue(sach, 0.5f).SetEase(Ease.OutCirc); });
+
+    }
+
 
     public void TweenProgressSlider(int i, Slider slider)
     {
@@ -237,15 +273,25 @@ public class UIManager : MonoBehaviour
         this.GetComponent<UnityEngine.UI.ScrollRect>().normalizedPosition = new Vector2(0, 1);
         if (Game.Instance.gamestate == GameState.inmainmenu)
         {
-            Startseite.SetActive(true);
-            this.GetComponent<UnityEngine.UI.ScrollRect>().content = Panel.GetComponent<RectTransform>();
+            erfolge.gameObject.SetActive(false);
             Quizpanel.gameObject.SetActive(false);
+            this.GetComponent<UnityEngine.UI.ScrollRect>().content = Panel.GetComponent<RectTransform>();
+            Startseite.SetActive(true);
+
         }
         if (Game.Instance.gamestate == GameState.takingquiz)
         {
             Startseite.SetActive(false);
+            erfolge.gameObject.SetActive(false);
             this.GetComponent<UnityEngine.UI.ScrollRect>().content = QuizPanel.GetComponent<RectTransform>();
             Quizpanel.gameObject.SetActive(true);
+        }
+        if(Game.Instance.gamestate == GameState.achievement)
+        {
+            Startseite.SetActive(false);
+            Quizpanel.gameObject.SetActive(false);
+            this.GetComponent<UnityEngine.UI.ScrollRect>().content = erfolge.GetComponent<RectTransform>();
+            erfolge.SetActive(true);
         }
     }
 
@@ -261,6 +307,14 @@ public class UIManager : MonoBehaviour
             AreYouSure.SetActive(true);
             TweenLoseAndWinPanel(AreYouSure);
         }
+    }
+
+    public void ShowErfolge()
+    {
+        Game.Instance.Load();
+        Game.Instance.SetGameState(GameState.achievement);
+        StartCoroutine(TweenAllChildren(erfolge.transform.GetChild(0), 1f, 0.2f, Ease.OutBack));
+        StartCoroutine(TweenErfolge());
     }
 
     public void TryMainMenu()
@@ -291,6 +345,11 @@ public class UIManager : MonoBehaviour
         AreYouSure.SetActive(false);
     }
 
+    public void GoBackAchievements(GameObject go)
+    {
+        Game.Instance.SetGameState(GameState.inmainmenu);
+    }
+
     public void GoBack(GameObject go)
     {
         CloseLoseAndWinPanel(go);
@@ -308,7 +367,7 @@ public class UIManager : MonoBehaviour
         GameObject artboard = Instantiate(QuizManager.Instance.QuizArray[index].gameObject, GamePanel.transform);
         QuizManager.Instance.currentQuiz = artboard.GetComponent<Quiz>();
         QuizManager.Instance.AllQuestionFinished += ShowKapitelAbgeschlossen;
-        StartCoroutine(TweenAllChildren(artboard.transform, 0.2f, 0.2f, Ease.InOutQuad));
+        StartCoroutine(TweenAllChildren(artboard.transform, 1f, 0.2f, Ease.OutBack));
     }
 
 
