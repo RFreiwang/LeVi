@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -46,6 +47,10 @@ public class UIManager : MonoBehaviour
     Text matheText;
     [SerializeField]
     Text sachkText;
+    [SerializeField]
+    GameObject VideoPrefab;
+    [SerializeField]
+    GameObject VideoHolder;
 
     Tween childTween;
 
@@ -166,6 +171,12 @@ public class UIManager : MonoBehaviour
         punkte.text = "Punkte " + i + "/10";
     }
 
+    internal void SetVideoFullScreen()
+    {
+        //VideoHolder.transform.parent = QuizPanel.transform;
+        //VideoHolder.transform.position = Vector3.zero;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -214,6 +225,16 @@ public class UIManager : MonoBehaviour
                 {
                     quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
                 }
+                if (i <= Game.Instance.GetMathPoints())
+                {
+                    quizarray[i].GetComponent<Button>().interactable = true;
+                    quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = Color.white;
+                }
+                else
+                {
+                    quizarray[i].GetComponent<Button>().interactable = false;
+                    quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = Color.grey;
+                }
             }
         }
 
@@ -230,6 +251,27 @@ public class UIManager : MonoBehaviour
                 {
                     quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
                 }
+                if(i <= Game.Instance.GetSachPoints())
+                {
+                    quizarray[i].GetComponent<Button>().interactable = true;
+                    quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = Color.white;
+                }
+                else
+                {
+                    quizarray[i].GetComponent<Button>().interactable = false;
+                    quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = Color.grey;
+                }
+                //if(i > Game.Instance.GetSachPoints())
+                //{
+                //    if(i+1 < quizarray.Length)
+                //    {
+                //        quizarray[i+1].GetComponent<Button>().interactable = false;
+                //    }
+                //}
+                //else
+                //{
+                //    quizarray[i].GetComponent<Button>().interactable = true;
+                //}
             }
         }
 
@@ -307,6 +349,18 @@ public class UIManager : MonoBehaviour
             AreYouSure.SetActive(true);
             TweenLoseAndWinPanel(AreYouSure);
         }
+    }
+
+    public void OpenCurrentVideo()
+    {
+        QuizManager.Instance.currentQuiz.OpenVideoPanel();
+    }
+
+    public void OpenVideoScreen()
+    {
+        VideoPrefab.SetActive(true);
+        VideoPrefab.transform.SetAsLastSibling();
+        TweenLoseAndWinPanel(VideoPrefab);
     }
 
     public void ShowErfolge()
