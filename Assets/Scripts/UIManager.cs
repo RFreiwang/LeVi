@@ -57,6 +57,9 @@ public class UIManager : MonoBehaviour
 
     Tween childTween;
 
+
+    private Tween buttonTween;
+
     private GameObject SaveVideoHolder;
 
     private Button[] buttons;
@@ -93,6 +96,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Panel.GetComponent<RectTransform>().localPosition = new Vector3(0, -700, 0);
         StartCoroutine(startSzene());
 
         Game.Instance.OnStateChange += SwitchPanelAndScroll;
@@ -102,16 +106,17 @@ public class UIManager : MonoBehaviour
 
     IEnumerator startSzene()
     {
-        foreach (Button but in buttons)
+        if (!buttonTween.IsActive())
         {
-            but.transform.localPosition = new Vector3(0, but.transform.localPosition.y - 1000, 0);
+            foreach (Button but in buttons)
+            {
+                but.transform.localPosition = new Vector3(0, but.transform.localPosition.y - 1000, 0);
+            }
+        StartCoroutine(tweenStartButtons(buttons));
         }
-
   
         tweenImageLeft(upperImage);
         tweenImageLeft(lowerImage);
-        StartCoroutine(tweenStartButtons(buttons));
-
         
         yield return null;
     }
@@ -120,9 +125,8 @@ public class UIManager : MonoBehaviour
     {
         for(int i = 0; i < buttonArray.Length; i++)
         {
-            Tween buttonTween = buttonArray[i].gameObject.transform.DOLocalMoveY(buttonArray[i].transform.localPosition.y + 1000, 1f).SetEase(Ease.OutBack);
+            buttonTween = buttonArray[i].gameObject.transform.DOLocalMoveY(buttonArray[i].transform.localPosition.y + 1000, 1f).SetEase(Ease.OutBack);
             yield return new WaitForSeconds(.2f);
-
         }
     }
 
