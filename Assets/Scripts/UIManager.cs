@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using UnityEngine.Video;
 
 public class UIManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class UIManager : MonoBehaviour
     public GameObject LosePanel;
     [SerializeField]
     public GameObject GamePanel;
+    [SerializeField]
+    GameObject LernvideoPanel;
     [SerializeField]
     GameObject KapitelAbgeschlossenPanel;
     [SerializeField]
@@ -53,6 +56,8 @@ public class UIManager : MonoBehaviour
     GameObject VideoHolder;
 
     Tween childTween;
+
+    private GameObject SaveVideoHolder;
 
     private Button[] buttons;
     private static UIManager instance = null;
@@ -173,8 +178,9 @@ public class UIManager : MonoBehaviour
 
     internal void SetVideoFullScreen()
     {
-        //VideoHolder.transform.parent = QuizPanel.transform;
-        //VideoHolder.transform.position = Vector3.zero;
+        SaveVideoHolder = VideoHolder;
+        VideoHolder.transform.parent = QuizPanel.transform;
+        VideoHolder.transform.position = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -261,17 +267,7 @@ public class UIManager : MonoBehaviour
                     quizarray[i].GetComponent<Button>().interactable = false;
                     quizarray[i].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = Color.grey;
                 }
-                //if(i > Game.Instance.GetSachPoints())
-                //{
-                //    if(i+1 < quizarray.Length)
-                //    {
-                //        quizarray[i+1].GetComponent<Button>().interactable = false;
-                //    }
-                //}
-                //else
-                //{
-                //    quizarray[i].GetComponent<Button>().interactable = true;
-                //}
+
             }
         }
 
@@ -288,23 +284,16 @@ public class UIManager : MonoBehaviour
         Game.Instance.ResetSaveData();
     }
 
-    public void SetToDone(Quiz[] quizArray)
-    {
-        foreach(Quiz quiz in quizArray)
-        {
-
-        }
-    }
 
     public void TweenLoseAndWinPanel(GameObject go)
     {
         go.transform.localScale = new Vector3(1, 1, 1);
-        go.transform.DOScale(0, 0.1f).From().SetEase(Ease.InOutQuad);
+        go.transform.DOScale(0, 0.2f).From().SetEase(Ease.OutQuad);
     }
 
     public void CloseLoseAndWinPanel(GameObject go)
     {
-        go.transform.DOScale(0, 0.1f).SetEase(Ease.InOutQuad).OnComplete(() => { go.SetActive(false); });
+        go.transform.DOScale(0, 0.2f).SetEase(Ease.InOutQuad).OnComplete(() => { go.SetActive(false); });
     }
 
     public void SwitchPanelAndScroll()
@@ -317,6 +306,7 @@ public class UIManager : MonoBehaviour
         {
             erfolge.gameObject.SetActive(false);
             Quizpanel.gameObject.SetActive(false);
+            LernvideoPanel.SetActive(false);
             this.GetComponent<UnityEngine.UI.ScrollRect>().content = Panel.GetComponent<RectTransform>();
             Startseite.SetActive(true);
 
@@ -325,6 +315,7 @@ public class UIManager : MonoBehaviour
         {
             Startseite.SetActive(false);
             erfolge.gameObject.SetActive(false);
+            LernvideoPanel.SetActive(false);
             this.GetComponent<UnityEngine.UI.ScrollRect>().content = QuizPanel.GetComponent<RectTransform>();
             Quizpanel.gameObject.SetActive(true);
         }
@@ -332,8 +323,17 @@ public class UIManager : MonoBehaviour
         {
             Startseite.SetActive(false);
             Quizpanel.gameObject.SetActive(false);
+            LernvideoPanel.SetActive(false);
             this.GetComponent<UnityEngine.UI.ScrollRect>().content = erfolge.GetComponent<RectTransform>();
             erfolge.SetActive(true);
+        }
+        if (Game.Instance.gamestate == GameState.watchvideo)
+        {
+            Startseite.SetActive(false);
+            Quizpanel.gameObject.SetActive(false);
+            erfolge.SetActive(false);
+            this.GetComponent<UnityEngine.UI.ScrollRect>().content = LernvideoPanel.GetComponent<RectTransform>();
+            LernvideoPanel.SetActive(true);
         }
     }
 
@@ -356,11 +356,34 @@ public class UIManager : MonoBehaviour
         QuizManager.Instance.currentQuiz.OpenVideoPanel();
     }
 
+    public void playVideo(VideoClip videoClip)
+    {
+       
+        OpenVideoScreen();
+        VideoManager.Instance.m_VideoClips.Clear();
+        VideoManager.Instance.m_VideoClips.Add(videoClip);
+        VideoManager.Instance.m_VideoPlayer.clip = videoClip;
+        VideoManager.Instance.Play();
+    }
+
+    public void SetFullScreen()
+    {
+        float bruch = (float)1080 / (float)Screen.width;
+        VideoPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(1080, Screen.height * bruch);
+    }
+
     public void OpenVideoScreen()
     {
+        SetFullScreen();
         VideoPrefab.SetActive(true);
         VideoPrefab.transform.SetAsLastSibling();
         TweenLoseAndWinPanel(VideoPrefab);
+    }
+
+    public void ShowVideoPanel()
+    {
+        Game.Instance.SetGameState(GameState.watchvideo);
+        StartCoroutine(TweenAllChildren(LernvideoPanel.transform.GetChild(0), 1f, 0.2f, Ease.OutBack));
     }
 
     public void ShowErfolge()
@@ -389,6 +412,7 @@ public class UIManager : MonoBehaviour
         }
         StartNav.SetActive(true);
         FailNavBar.SetActive(false);
+        VideoPrefab.SetActive(false);
         Game.Instance.SetGameState(GameState.inmainmenu);
         StartCoroutine(startSzene());
     }

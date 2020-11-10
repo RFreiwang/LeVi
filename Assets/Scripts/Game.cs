@@ -7,7 +7,8 @@ public enum GameState
 {
     takingquiz,
     inmainmenu,
-    achievement
+    achievement,
+    watchvideo,
 }
 
 
