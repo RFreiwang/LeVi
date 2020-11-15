@@ -48,6 +48,13 @@ public static class SaveSystem
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
+            if(stream.Length == 0)
+            {
+                Debug.LogError("Save empty in " + path);
+                Debug.LogError("Creating new SaveData");
+                stream.Close();
+                return ResetSaveData();
+            }
             SaveData data = formatter.Deserialize(stream) as SaveData;
             stream.Close();
             Debug.Log("Game was loaded");
@@ -56,11 +63,13 @@ public static class SaveSystem
         else
         {
             Debug.LogError("Save file not foun in " + path);
+            Debug.LogError("Creating new SaveData");
+            ResetSaveData();
             return null;
         }
     }
 
-    public static void ResetSaveData()
+    public static SaveData ResetSaveData()
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/player.fun";
@@ -72,6 +81,7 @@ public static class SaveSystem
         Debug.Log("Save was reset");
         formatter.Serialize(stream, data);
         stream.Close();
+        return data;
     }
 
 }

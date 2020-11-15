@@ -52,6 +52,8 @@ public class Game : MonoBehaviour
 
         QuizManager q = FindObjectOfType<QuizManager>();
 
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
     }
 
     private void Start()

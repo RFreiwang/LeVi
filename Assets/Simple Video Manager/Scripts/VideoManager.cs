@@ -231,6 +231,8 @@ public class VideoManager : MonoBehaviour
         }
         else
         {
+            
+
             m_VideoPlayer.Play();
 
             SetIsPlayingSprite(true);

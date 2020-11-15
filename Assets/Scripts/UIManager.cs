@@ -9,6 +9,10 @@ using UnityEngine.Video;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
+    GameObject gameNavBarImage;
+    [SerializeField]
+    GameObject failNavBarImage;
+    [SerializeField]
     public GameObject Startseite;
     [SerializeField]
     public GameObject Panel;
@@ -54,6 +58,10 @@ public class UIManager : MonoBehaviour
     GameObject VideoPrefab;
     [SerializeField]
     GameObject VideoHolder;
+    [SerializeField]
+    Sprite sachkBand;
+    [SerializeField]
+    Sprite matheBand;
 
     Tween childTween;
 
@@ -192,7 +200,14 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GoBackToMainMenu();
+            if (VideoPrefab.activeSelf)
+            {
+                GoBack(VideoPrefab);
+            }
+            else
+            {
+                GoBackToMainMenu();
+            }
         }
     }
 
@@ -224,6 +239,8 @@ public class UIManager : MonoBehaviour
         StartNav.SetActive(false);
         if (gameObject.name == "Kapitelauswahl Mathematik")
         {
+            failNavBarImage.GetComponent<Image>().sprite = matheBand;
+            gameNavBarImage.GetComponent<Image>().sprite = matheBand;
             for (int i = 0; i < quizarray.Length; i++)
             {
                 Quiz quiz = QuizManager.Instance.QuizArray[i].GetComponent<Quiz>();
@@ -250,6 +267,8 @@ public class UIManager : MonoBehaviour
 
         if (gameObject.name == "Kapitelauswahl Sachkunde")
         {
+            failNavBarImage.GetComponent<Image>().sprite = sachkBand;
+            gameNavBarImage.GetComponent<Image>().sprite = sachkBand;
             for (int i = 0; i < quizarray.Length; i++)
             {
                 Quiz quiz = QuizManager.Instance.QuizArray[i+4].GetComponent<Quiz>();
